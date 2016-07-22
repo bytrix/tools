@@ -51,6 +51,12 @@ public class MainFrame extends javax.swing.JFrame {
         taResult = new javax.swing.JTextArea();
         btnStart = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +95,39 @@ public class MainFrame extends javax.swing.JFrame {
                 btnClearActionPerformed(evt);
             }
         });
+
+        jMenu1.setText("Settings");
+
+        jMenuItem1.setText("Edit URLs");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Fetch URLs");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Reports");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,7 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart)
@@ -161,13 +200,21 @@ public class MainFrame extends javax.swing.JFrame {
         
         Iterator it = alFull.iterator();
         while(it.hasNext()) {
-            index++;
             String temp = it.next().toString();
             if (alDownloaded.contains(temp)) {
                 result.append(index + ": " + temp + "\n");
+//                Item.index.add(index);
+                Items.downloadedIds.add(index+1);
             } else {
                 result.append("\t(MISSING) " + index + ":\t" + temp + "\n");
             }
+            Item item = new Item(index+1, temp);
+            item.setUrl(Items.URLs.get(index));
+            Items.items.add(item);
+            index++;
+        }
+        if(Items.URLs == null) {
+            System.out.println("empty urls!");
         }
         if (!taFull.getText().isEmpty()) {
             taResult.setText(result.toString());
@@ -182,6 +229,35 @@ public class MainFrame extends javax.swing.JFrame {
         taFull.setText("");
         taResult.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+//        System.out.println("this: " + this.getClass());
+        EditURLDialog d = new EditURLDialog(this, true);
+        d.setVisible(true);
+//        System.out.println("hello");
+//        EditURLFrame editURLFrame = new EditURLFrame();
+//        editURLFrame.setVisible(true);
+//        editURLFrame.setResizable(false);
+//        editURLFrame.setFocusable(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+//        FetchURLDialog fetchURLDialog = new FetchURLDialog(this, true);
+//        fetchURLDialog.setVisible(true);
+        FetchURLFrame fetchURLFrame = new FetchURLFrame();
+        fetchURLFrame.setVisible(true);
+        fetchURLFrame.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+//        System.out.println(Item.index);
+        for(Item item : Items.items) {
+            System.out.println("id: " + item.id + " title: " + item.title + " url: " + item.url);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +304,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
